@@ -9,7 +9,6 @@
         "35422a7e-401e-496a-b789-7bdfb2b1cae5": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "Top": "Top Area of the page",
             "Bottom": "Bottom Area of the page"
           }
         }
@@ -21,7 +20,6 @@
         "35422a7e-401e-496a-b789-7bdfb2b1cae5": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "Top": "Top Area of the page",
             "Bottom": "Bottom Area of the page"
           }
         }

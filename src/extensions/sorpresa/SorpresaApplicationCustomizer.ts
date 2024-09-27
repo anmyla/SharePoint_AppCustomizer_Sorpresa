@@ -7,7 +7,7 @@ import {
 
 import * as strings from 'SorpresaApplicationCustomizerStrings';
 import styles from './AppCustomizer.module.scss';
-import { escape } from '@microsoft/sp-lodash-subset';
+//import { escape } from '@microsoft/sp-lodash-subset';
 
 import { spfi } from "@pnp/sp";
 import "@pnp/sp/webs";
@@ -21,16 +21,16 @@ const LOG_SOURCE: string = 'SorpresaApplicationCustomizer';
 
 
 export interface ISorpresaApplicationCustomizerProperties {
-  Top: string;
+  // Top: string;
   Bottom: string;
 }
 
 
 export default class SorpresaApplicationCustomizer
   extends BaseApplicationCustomizer<ISorpresaApplicationCustomizerProperties> {
-  
-    private _topPlaceholder : PlaceholderContent | undefined;
-    private _bottomPlaceholder : PlaceholderContent | undefined;
+
+  //private _topPlaceholder: PlaceholderContent | undefined;
+  private _bottomPlaceholder: PlaceholderContent | undefined;
 
   public onInit(): Promise<void> {
 
@@ -47,62 +47,65 @@ export default class SorpresaApplicationCustomizer
         .map(name => PlaceholderName[name])
         .join(", ")
     );
-  
+
+    /*
     // Handling the top placeholder
     if (!this._topPlaceholder) {
       this._topPlaceholder = this.context.placeholderProvider.tryCreateContent(
         PlaceholderName.Top,
         { onDispose: this._onDispose }
       );
-  
+
       // The extension should not assume that the expected placeholder is available.
       if (!this._topPlaceholder) {
         console.error("The expected placeholder (Top) was not found.");
         return;
       }
-  
+
       if (this.properties) {
         let topString: string = this.properties.Top;
         if (!topString) {
           topString = "(Top property was not defined.)";
         }
-  
+
         if (this._topPlaceholder.domElement) {
           this._topPlaceholder.domElement.innerHTML = `
           <div class="${styles.app}">
             <div class="${styles.top}">
               <i class="ms-Icon ms-Icon--Info" aria-hidden="true"></i> ${escape(
-                topString
-              )}
+            topString
+          )}
             </div>
           </div>`;
         }
       }
     }
-  
+*/
     // Handling the bottom placeholder
     if (!this._bottomPlaceholder) {
       this._bottomPlaceholder = this.context.placeholderProvider.tryCreateContent(
         PlaceholderName.Bottom,
         { onDispose: this._onDispose }
       );
-  
+
       if (!this._bottomPlaceholder) {
         console.error("The expected placeholder (Bottom) was not found.");
         return;
       }
-  
+
       if (this.properties) {
-       // let bottomString: string = this.properties.Bottom || "(Bottom property was not defined.)";
-        
+        // let bottomString: string = this.properties.Bottom || "(Bottom property was not defined.)";
+
         if (this._bottomPlaceholder.domElement) {
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          const imgSrc = require('./assets/img/egg1.png');
           this._bottomPlaceholder.domElement.innerHTML = `
             <div class="${styles.app}">
               <div class="${styles.bottom}">
-                <img src="./assets/img/egg1.png" id="eggImage" class="animate__animated animate__tada" style="position: fixed; bottom: 20px; right: 20px; cursor: pointer;" alt="Gift" />
+                <img src="${imgSrc}" id="${styles.eggImage}" class="animate__animated animate__flip"  alt="Gift" />
               </div>
             </div>`;
-  
+
           // Add click event listener for the gift image
           const giftImage = this._bottomPlaceholder.domElement.querySelector("#giftImage");
           if (giftImage) {
@@ -122,7 +125,7 @@ export default class SorpresaApplicationCustomizer
     const userName = prompt("Congratulations! Please enter your name:");
     const userEmail = prompt("Please enter your email:");
     const pageUrl = window.location.href;
-  
+
     // Check if all fields are filled
     if (userName && userEmail) {
       // Prepare the data for the "Sorpresa Winners List"
@@ -131,7 +134,7 @@ export default class SorpresaApplicationCustomizer
         Email: userEmail,
         URL: pageUrl
       };
-  
+
       // Call the method to save this data to the SharePoint list
       await this._saveWinnerData(winnerData);
       alert("Your information has been recorded. Thank you for participating!");
@@ -139,7 +142,7 @@ export default class SorpresaApplicationCustomizer
       alert("Please fill in all fields.");
     }
   }
-  
+
   private async _saveWinnerData(winnerData: { Name: string; Email: string; URL: string }): Promise<void> {
     try {
       await sp.web.lists.getByTitle("SorpresaWinners").items.add({
@@ -152,6 +155,6 @@ export default class SorpresaApplicationCustomizer
       console.error("Error saving winner data: ", error);
     }
   }
-  
-  
+
+
 }
