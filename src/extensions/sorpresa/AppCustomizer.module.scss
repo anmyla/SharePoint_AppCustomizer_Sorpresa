@@ -26,7 +26,7 @@
         color: $ms-color-white;
     }
 
-    #eggImage {
+    #giftImage {
         height: 150px;
         width: 150px;
         position: fixed;
@@ -34,4 +34,9 @@
         right: 20px;
         cursor: pointer;
     }
+
+    .animate__animated.animate__bounce {
+        --animate-duration: 10s;
+    }
+
 }

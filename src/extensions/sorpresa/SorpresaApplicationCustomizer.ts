@@ -7,7 +7,6 @@ import {
 
 import * as strings from 'SorpresaApplicationCustomizerStrings';
 import styles from './AppCustomizer.module.scss';
-//import { escape } from '@microsoft/sp-lodash-subset';
 
 import { spfi } from "@pnp/sp";
 import "@pnp/sp/webs";
@@ -21,7 +20,6 @@ const LOG_SOURCE: string = 'SorpresaApplicationCustomizer';
 
 
 export interface ISorpresaApplicationCustomizerProperties {
-  // Top: string;
   Bottom: string;
 }
 
@@ -29,7 +27,6 @@ export interface ISorpresaApplicationCustomizerProperties {
 export default class SorpresaApplicationCustomizer
   extends BaseApplicationCustomizer<ISorpresaApplicationCustomizerProperties> {
 
-  //private _topPlaceholder: PlaceholderContent | undefined;
   private _bottomPlaceholder: PlaceholderContent | undefined;
 
   public onInit(): Promise<void> {
@@ -48,39 +45,6 @@ export default class SorpresaApplicationCustomizer
         .join(", ")
     );
 
-    /*
-    // Handling the top placeholder
-    if (!this._topPlaceholder) {
-      this._topPlaceholder = this.context.placeholderProvider.tryCreateContent(
-        PlaceholderName.Top,
-        { onDispose: this._onDispose }
-      );
-
-      // The extension should not assume that the expected placeholder is available.
-      if (!this._topPlaceholder) {
-        console.error("The expected placeholder (Top) was not found.");
-        return;
-      }
-
-      if (this.properties) {
-        let topString: string = this.properties.Top;
-        if (!topString) {
-          topString = "(Top property was not defined.)";
-        }
-
-        if (this._topPlaceholder.domElement) {
-          this._topPlaceholder.domElement.innerHTML = `
-          <div class="${styles.app}">
-            <div class="${styles.top}">
-              <i class="ms-Icon ms-Icon--Info" aria-hidden="true"></i> ${escape(
-            topString
-          )}
-            </div>
-          </div>`;
-        }
-      }
-    }
-*/
     // Handling the bottom placeholder
     if (!this._bottomPlaceholder) {
       this._bottomPlaceholder = this.context.placeholderProvider.tryCreateContent(
@@ -94,15 +58,13 @@ export default class SorpresaApplicationCustomizer
       }
 
       if (this.properties) {
-        // let bottomString: string = this.properties.Bottom || "(Bottom property was not defined.)";
-
         if (this._bottomPlaceholder.domElement) {
           // eslint-disable-next-line @typescript-eslint/no-var-requires
           const imgSrc = require('./assets/img/egg1.png');
           this._bottomPlaceholder.domElement.innerHTML = `
             <div class="${styles.app}">
               <div class="${styles.bottom}">
-                <img src="${imgSrc}" id="${styles.eggImage}" class="animate__animated animate__flip"  alt="Gift" />
+                <img src="${imgSrc}" id="${styles.giftImage}" class="animate__animated animate__bounce animate__repeat-3"  alt="Surprise!" />
               </div>
             </div>`;
 
