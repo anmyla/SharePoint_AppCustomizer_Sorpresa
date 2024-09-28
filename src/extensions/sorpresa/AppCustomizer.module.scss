@@ -22,8 +22,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: $ms-color-themePrimary;
         color: $ms-color-white;
+        background-color: lightblue;
     }
 
     #giftImage {
@@ -39,19 +39,41 @@
         --animate-duration: 10s;
     }
 
-
-    .customAlert {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 1px solid #ccc;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        padding: 20px;
-        display: none;
+    .giftBox {
+        display:block;
     }
+
+    #alertContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .customAlert {
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        background-color: $ms-color-themePrimary;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center;
+        z-index: 1000;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: #fff;
+        width: 300px;
+        height: auto; 
+    }
+    
 
     .alertContent {
         text-align: center;
@@ -60,19 +82,19 @@
             margin-bottom: 20px;
         }
 
-        button {
-            padding: 10px 15px;
-            background-color: #0078d4;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-
-            &:hover {
-                background-color: #005a9e;
-            }
-        }
     }
 
+    .button {
+        padding: 10px 15px;
+        background-color: #fff;
+        color: $ms-color-themePrimary;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #005a9e;
+        }
+    }
 
 }
