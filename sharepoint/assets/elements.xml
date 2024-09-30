@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <CustomAction
+        Title="Sorpresa"
+        Location="ClientSideExtension.ApplicationCustomizer"
+        ClientSideComponentId="09a5b6d9-2177-4e5b-a06d-83ad0f4a4a1b"
+        ClientSideComponentProperties="{&quot;Bottom&quot;:&quot;Test message&quot;}">
+    </CustomAction>
+</Elements>

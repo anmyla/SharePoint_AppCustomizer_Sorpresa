@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://tecconsultat.sharepoint.com/sites/Myla/SiteCustomiser/SitePages/Home.aspx",
+      "customActions": {
+        "09a5b6d9-2177-4e5b-a06d-83ad0f4a4a1b": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "Bottom": "Test message"
+          }
+        }
+      }
+    },
+    "sorpresa": {
+      "pageUrl": "https://tecconsultat.sharepoint.com/sites/Myla/SiteCustomiser/SitePages/Home.aspx",
+      "customActions": {
+        "09a5b6d9-2177-4e5b-a06d-83ad0f4a4a1b": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "Bottom": "Test message"
+          }
+        }
+      }
+    }
+  }
+}

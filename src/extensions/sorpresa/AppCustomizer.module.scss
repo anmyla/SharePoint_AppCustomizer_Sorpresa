@@ -1,0 +1,72 @@
+.giftBox {
+    height: 150px;
+    width: 150px;
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;  
+    cursor: pointer;
+    z-index: 1000; 
+}
+
+.giftBox img {
+    height: 100%;
+    width: 100%; 
+    object-fit: contain;  
+    display: block; 
+}
+
+.animate__animated.animate__bounce {
+    --animate-duration: 10s; 
+}
+
+#alertContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.customAlert {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    z-index: 1000;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #fff;
+    width: 300px;
+    height: auto; 
+}
+
+.alertContent {
+    text-align: center;
+
+    p {
+        margin-bottom: 20px;
+    }
+}
+
+.button {
+    padding: 10px 15px;
+    background-color: #fff;
+    color: lightblue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #005a9e;
+    }
+}
