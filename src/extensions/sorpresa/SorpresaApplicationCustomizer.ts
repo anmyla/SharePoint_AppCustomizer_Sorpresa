@@ -9,8 +9,20 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import CustomFooter, { ICustomFooterProps } from "./components/customFooter/CustomFooter";
 import * as strings from 'SorpresaApplicationCustomizerStrings';
+import { spfi, SPFx } from '@pnp/sp';
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+import "@pnp/sp/site-users/web";
 
 const LOG_SOURCE: string = 'SorpresaApplicationCustomizer';
+
+interface ISorpresaEvent {
+  StartDate: string;  
+  EndDate: string;    
+  Ongoing: boolean;
+  EventType: string
+}
 
 export interface ISorpresaApplicationCustomizerProperties {
   Bottom: string;
@@ -19,14 +31,16 @@ export interface ISorpresaApplicationCustomizerProperties {
 export default class SorpresaApplicationCustomizer
   extends BaseApplicationCustomizer<ISorpresaApplicationCustomizerProperties> {
     private _bottomPlaceholder: PlaceholderContent | undefined;
+    private sp: ReturnType<typeof spfi>;
 
     public onInit(): Promise<void> {
         Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
+        this.sp = spfi().using(SPFx(this.context));
         this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
         return Promise.resolve();
     }
 
-    private _renderPlaceHolders(): void {
+    private async _renderPlaceHolders(): Promise<void> {
       console.log('Available placeholders: ',
           this.context.placeholderProvider.placeholderNames.map(name => PlaceholderName[name]).join(', '));
 
@@ -40,14 +54,43 @@ export default class SorpresaApplicationCustomizer
               return;
           }
 
+           const currentDate = new Date();
+           const ongoingEvents = await this.fetchOngoingEvents(currentDate);
+
+           if (ongoingEvents.length > 0) { 
           const element: React.ReactElement<ICustomFooterProps> = React.createElement(CustomFooter, {
-              spfxContext: this.context // Passing the SPFx context to CustomFooter
+              spfxContext: this.context
           });
 
           ReactDOM.render(element, this._bottomPlaceholder.domElement);
+        }
       }
     }
 
+    private async fetchOngoingEvents(currentDate: Date): Promise<ISorpresaEvent[]> {
+      try {
+          // Fetch all items from the SorpresaEvents list
+          const events: ISorpresaEvent[] = await this.sp.web.lists
+              .getByTitle("SorpresaEvents")
+              .select("StartDate,EndDate,Ongoing,EventType")
+              .items();
+  
+              console.log("ALL EVENTS: " + JSON.stringify(events, null, 2));     
+          const ongoingEvents = events.filter(event => {
+              const startDate = new Date(event.StartDate);
+              const endDate = new Date(event.EndDate);
+              return event.Ongoing === true && startDate <= currentDate && endDate >= currentDate;
+          });
+  
+          console.log("Ongoing Events: " + JSON.stringify(ongoingEvents, null, 2)); 
+          return ongoingEvents;
+      } catch (error: any) {
+          console.error("Error fetching ongoing events:", error);
+          return []; 
+      }
+  }
+  
+  
     private _onDispose(): void {
       if (this._bottomPlaceholder) {
         ReactDOM.unmountComponentAtNode(this._bottomPlaceholder.domElement);

@@ -15,6 +15,7 @@ export interface ICustomFooterProps {
 export interface ICustomFooterState {
     showAlert: boolean;
     winnerName: string;
+    showGiftElement: boolean;
 }
 
 export default class CustomFooter extends React.Component<ICustomFooterProps, ICustomFooterState> {
@@ -26,24 +27,21 @@ export default class CustomFooter extends React.Component<ICustomFooterProps, IC
         this.state = {
             showAlert: false,
             winnerName: "",
+            showGiftElement: true,
         };
 
-        // Initialize PnPjs with the SPFx context passed down from the customizer
         this.sp = spfi().using(SPFx(this.props.spfxContext));
 
-        // Bind event handlers to 'this'
         this.onElementClick = this.onElementClick.bind(this);
-        this.handleAlertSave = this.handleAlertSave.bind(this);
         this.saveWinnerDetails = this.saveWinnerDetails.bind(this);
     }
 
     private async onElementClick(): Promise<void> {
         console.log("Element is clicked!");
-
         const winner = await this.sp.web.currentUser();
         console.log(JSON.stringify(winner, null, 2));
         const winnerName = winner.Title;
-        this.setState({ showAlert: true, winnerName });
+        this.setState({ showAlert: true, winnerName, showGiftElement: false });
 
     }
 
@@ -64,22 +62,20 @@ export default class CustomFooter extends React.Component<ICustomFooterProps, IC
             console.error("Error saving winner details:", error);
         }
         console.log("Save winner details to SharePoint list");
-    }
-
-    private handleAlertSave(): void {
         this.setState({ showAlert: false });
     }
 
+
+
     public render(): JSX.Element {
-        const { showAlert, winnerName } = this.state;
+        const { showAlert, winnerName, showGiftElement } = this.state;
 
         return (
             <div>
-                <GiftElement onClick={this.onElementClick} />
+                {showGiftElement && <GiftElement onClick={this.onElementClick} />}
                 {showAlert && (
                     <CustomAlert
                         winner={winnerName}
-                        onSave={this.handleAlertSave}
                         onConfirm={this.saveWinnerDetails}
                     />
                 )}
