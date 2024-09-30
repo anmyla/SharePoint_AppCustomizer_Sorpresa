@@ -4,6 +4,6 @@
         Title="Sorpresa"
         Location="ClientSideExtension.ApplicationCustomizer"
         ClientSideComponentId="35422a7e-401e-496a-b789-7bdfb2b1cae5"
-        ClientSideComponentProperties="{&quot;testMessage&quot;:&quot;Test message&quot;}">
+        ClientSideComponentProperties="{&quot;Bottom&quot;:&quot;Bottom Area of the page&quot;}">
     </CustomAction>
 </Elements>
