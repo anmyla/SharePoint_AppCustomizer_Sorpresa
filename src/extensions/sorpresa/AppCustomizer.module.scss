@@ -46,7 +46,7 @@
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
-    color: #fff;
+    color: #005a9e;
     width: 300px;
     height: 300px; 
 }
@@ -59,15 +59,23 @@
     }
 }
 
-.button {
+.customButton {
+    margin: 10px;
     padding: 10px 15px;
     background-color: #fff;
     color: lightblue;
-    border: none;
+    border: solid 1px #005a9e;
     border-radius: 5px;
     cursor: pointer;
-
-    &:hover {
-        background-color: #005a9e;
-    }
+    transition: background-color 0.3s ease;
+    color: #005a9e;
+    font-size: 14px;
 }
+
+.customButton:hover {
+    background-color: #005a9e;
+    border: solid 1px #fff;
+    color: #fff;
+}
+
+
