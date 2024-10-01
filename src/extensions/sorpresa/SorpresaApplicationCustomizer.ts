@@ -54,10 +54,14 @@ export default class SorpresaApplicationCustomizer
               return;
           }
 
+          
            const currentDate = new Date();
+           console.log("Get current date...." + currentDate);
            const ongoingEvents = await this.fetchOngoingEvents(currentDate);
 
+           console.log("If there is an ongoing valid event, render gift element");
            if (ongoingEvents.length > 0) { 
+           
           const element: React.ReactElement<ICustomFooterProps> = React.createElement(CustomFooter, {
               spfxContext: this.context
           });
@@ -68,15 +72,16 @@ export default class SorpresaApplicationCustomizer
     }
 
     private async fetchOngoingEvents(currentDate: Date): Promise<ISorpresaEvent[]> {
+      console.log("Fetch all items from the SorpresaEvents list.....")
       try {
-          // Fetch all items from the SorpresaEvents list
           const events: ISorpresaEvent[] = await this.sp.web.lists
               .getByTitle("SorpresaEvents")
               .select("StartDate,EndDate,Ongoing,EventType")
               .items();
   
-              console.log("ALL EVENTS: " + JSON.stringify(events, null, 2));     
-          const ongoingEvents = events.filter(event => {
+              console.log("Based on currentDate, filter for ongoing and valid events .... ");     
+
+              const ongoingEvents = events.filter(event => {
               const startDate = new Date(event.StartDate);
               const endDate = new Date(event.EndDate);
               return event.Ongoing === true && startDate <= currentDate && endDate >= currentDate;

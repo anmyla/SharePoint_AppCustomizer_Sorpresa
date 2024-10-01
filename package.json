@@ -12,6 +12,7 @@
     "test": "gulp test"
   },
   "dependencies": {
+    "@fluentui/react": "^8.120.10",
     "@microsoft/decorators": "1.19.0",
     "@microsoft/sp-application-base": "1.19.0",
     "@microsoft/sp-core-library": "1.19.0",
@@ -21,7 +22,6 @@
     "@types/react": "17.0.45",
     "@types/react-dom": "17.0.17",
     "animate.css": "^4.1.1",
-    "office-ui-fabric-react": "^5.132.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "tslib": "2.3.1"

@@ -57,11 +57,10 @@ export default class CustomFooter extends React.Component<ICustomFooterProps, IC
                 Email: user.Email,
                 Website: currentURL.toString(),
             });
-            console.log("Winner details saved successfully!");
+            console.log("Winner details saved in the SorpresaWinners list successfully!");
         } catch (error) {
             console.error("Error saving winner details:", error);
         }
-        console.log("Save winner details to SharePoint list");
         this.setState({ showAlert: false });
     }
 
