@@ -20,7 +20,7 @@ const LOG_SOURCE: string = 'SorpresaApplicationCustomizer';
 interface ISorpresaEvent {
   StartDate: string;  
   EndDate: string;    
-  Ongoing: boolean;
+  isOngoing: boolean;
   EventType: string
 }
 
@@ -76,15 +76,15 @@ export default class SorpresaApplicationCustomizer
       try {
           const events: ISorpresaEvent[] = await this.sp.web.lists
               .getByTitle("SorpresaEvents")
-              .select("StartDate,EndDate,Ongoing,EventType")
+              .select("StartDate,EndDate,isOngoing,EventType")
               .items();
   
-              console.log("Based on currentDate, filter for ongoing and valid events .... ");     
+              console.log("Based on currentDate, filter for ongoing and valid events .... " +JSON.stringify(events, null, 0));     
 
               const ongoingEvents = events.filter(event => {
               const startDate = new Date(event.StartDate);
               const endDate = new Date(event.EndDate);
-              return event.Ongoing === true && startDate <= currentDate && endDate >= currentDate;
+              return event.isOngoing === true && startDate <= currentDate && endDate >= currentDate;
           });
   
           console.log("Ongoing Events: " + JSON.stringify(ongoingEvents, null, 2)); 

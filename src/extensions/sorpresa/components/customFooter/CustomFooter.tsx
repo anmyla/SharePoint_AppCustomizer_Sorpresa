@@ -45,19 +45,30 @@ export default class CustomFooter extends React.Component<ICustomFooterProps, IC
 
     }
 
+    private temporaryFunctionToCleanCurrentURL(): string {
+        const url = window.location.href;
+        const urlObject = new URL(url);
+        const unwantedParams = ['debugManifestsFile', 'loadSPFX', 'customActions'];
+        unwantedParams.forEach(param => urlObject.searchParams.delete(param));
+        return urlObject.toString();
+    }
+
     private async saveWinnerDetails(): Promise<void> {
         const user = await this.sp.web.currentUser();
         const list = this.sp.web.lists.getByTitle("SorpresaWinners");
-        const currentURL = "https://tecconsultat.sharepoint.com/sites/Myla/SiteCustomiser/SitePages/Home.aspx"; //temporary value for testing
-
+        const cleanedURL = this.temporaryFunctionToCleanCurrentURL();
+        console.log("GIFT LOCATION URL: " + cleanedURL)
         try {
-            await list.items.add({
+            const res = await list.items.add({
                 Title: user.Title,
-                Name: user.Title,
                 Email: user.Email,
-                Website: currentURL.toString(),
+                Website: {
+                    Description: "Gift location URL",
+                    Url: cleanedURL,
+                }
             });
             console.log("Winner details saved in the SorpresaWinners list successfully!");
+            console.log("Successfully added item to SorpresaWinners: " + JSON.stringify(res, null, 2));
         } catch (error) {
             console.error("Error saving winner details:", error);
         }
@@ -65,6 +76,27 @@ export default class CustomFooter extends React.Component<ICustomFooterProps, IC
     }
 
 
+
+    /*
+        private async saveWinnerDetails(): Promise<void> {
+            const user = await this.sp.web.currentUser();
+            const list = this.sp.web.lists.getByTitle("SorpresaWinners");
+            const currentURL = "https://tecconsultat.sharepoint.com/sites/Myla/SiteCustomiser/SitePages/Home.aspx"; //temporary value for testing
+            const res = await list.items.add({
+                Title: user.Title,
+                Email: user.Email,
+                Website: {
+                    Url: currentURL.toString(),
+                    Description: "Gift location URL"
+                }
+            });
+            console.log("Save winner? " + res);
+            console.log("Winner details saved in the SorpresaWinners list successfully!");
+    
+            this.setState({ showAlert: false });
+        }
+    
+    */
 
     public render(): JSX.Element {
         const { showAlert, winnerName, showGiftElement } = this.state;
