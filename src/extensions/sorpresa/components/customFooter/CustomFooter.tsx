@@ -57,46 +57,21 @@ export default class CustomFooter extends React.Component<ICustomFooterProps, IC
         const user = await this.sp.web.currentUser();
         const list = this.sp.web.lists.getByTitle("SorpresaWinners");
         const cleanedURL = this.temporaryFunctionToCleanCurrentURL();
+
         console.log("GIFT LOCATION URL: " + cleanedURL)
-        try {
-            const res = await list.items.add({
-                Title: user.Title,
-                Email: user.Email,
-                Website: {
-                    Description: "Gift location URL",
-                    Url: cleanedURL,
-                }
-            });
-            console.log("Winner details saved in the SorpresaWinners list successfully!");
-            console.log("Successfully added item to SorpresaWinners: " + JSON.stringify(res, null, 2));
-        } catch (error) {
-            console.error("Error saving winner details:", error);
-        }
+        const res = await list.items.add({
+            Title: user.Title,
+            Email: user.Email,
+            Website: {
+                Url: cleanedURL,
+                Description: "Gift location URL"
+            }
+        });
+        console.log("Save winner? " + res);
+        console.log("Winner details saved in the SorpresaWinners list successfully!");
         this.setState({ showAlert: false });
     }
 
-
-
-    /*
-        private async saveWinnerDetails(): Promise<void> {
-            const user = await this.sp.web.currentUser();
-            const list = this.sp.web.lists.getByTitle("SorpresaWinners");
-            const currentURL = "https://tecconsultat.sharepoint.com/sites/Myla/SiteCustomiser/SitePages/Home.aspx"; //temporary value for testing
-            const res = await list.items.add({
-                Title: user.Title,
-                Email: user.Email,
-                Website: {
-                    Url: currentURL.toString(),
-                    Description: "Gift location URL"
-                }
-            });
-            console.log("Save winner? " + res);
-            console.log("Winner details saved in the SorpresaWinners list successfully!");
-    
-            this.setState({ showAlert: false });
-        }
-    
-    */
 
     public render(): JSX.Element {
         const { showAlert, winnerName, showGiftElement } = this.state;
